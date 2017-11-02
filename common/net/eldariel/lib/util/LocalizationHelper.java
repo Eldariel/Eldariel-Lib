@@ -1,5 +1,9 @@
 package net.eldariel.lib.util;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -58,5 +62,56 @@ public class LocalizationHelper {
 		return getLocalizedString(prefix + "." + modId + ":" + key, parameters);
 	}
 	
+	// ===============
+	// Special methods
+	// ===============
 	
+	public String getMiscText(String key, Object...parameters) {
+		return getLocalizedString("misc", key, parameters);
+	}
+	
+	public String getWikiText(String key, Object...parameters) {
+		return getLocalizedString("wiki", key, parameters);
+	}
+	
+	public String getBlockSubText(String blockName, String key, Object...parameters) {
+		return getLocalizedString("tile", blockName + "." + key, parameters);
+	}
+	
+	public String getItemSubText(String itemName, String key, Object...parameters) {
+		return getLocalizedString("item", itemName + "." + key, parameters);
+	}
+	
+	// =================
+	// Description Lines
+	// =================
+	
+	public List<String> getBlockDescriptionLines(String blockName) {
+		return getDescriptionLines("tile." + modId + ":" + blockName + ".desc");
+	}
+	
+	public List<String> getItemDescriptionLines(String itemName) {
+		return getDescriptionLines("item." + modId + ":" + itemName + ".desc");
+	}
+	
+	public List<String> getDescriptionLines(String key) {
+		boolean oldHideFormatErrors = hideFormatErrors;
+		hideFormatErrors = true;
+		
+		List<String> list = Lists.newArrayList();
+		int i = 1;
+		String line = getLocalizedString(key + i);
+		while (!line.equals(key + i)) {
+			list.add(line);
+			line = getLocalizedString(key + ++i);
+		}
+		if (list.isEmpty()) {
+			line = getLocalizedString(key);
+			if (!line.equals(key)) {
+				list.add(line);
+			}
+		}
+		hideFormatErrors = oldHideFormatErrors;
+		return list;
+	}
 }
