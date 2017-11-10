@@ -16,7 +16,7 @@ public interface IGuideChapter {
 	String getLocalizedName();
 	
 	@SideOnly(Side.CLIENT)
-	String getLocalizedNamedWithFormatting();
+	String getLocalizedNameWithFormatting();
 	
 	IGuideEntry getEntry();
 	

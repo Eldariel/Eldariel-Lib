@@ -14,7 +14,7 @@ public abstract class GuiGuideBase extends GuiScreen {
 
 	public abstract void renderScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale);
 	
-	public abstract void renderSplittScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale, int length);
+	public abstract void renderSplitScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale, int length);
 	
 	public abstract List<GuiButton> getButtonList();
 	

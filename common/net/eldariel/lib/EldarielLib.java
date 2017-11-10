@@ -4,10 +4,15 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+// import net.eldariel.lib.debug.DataDump;
+import net.eldariel.lib.event.EldarielLibClientEvents;
+import net.eldariel.lib.event.EldarielLibCommonEvents;
+import net.eldariel.lib.gui.GuiHandlerLibF;
 import net.eldariel.lib.network.NetworkHandlerEL;
 import net.eldariel.lib.network.internal.MessageLeftClick;
 import net.eldariel.lib.util.LocalizationHelper;
 import net.eldariel.lib.util.LogHelper;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -45,7 +50,12 @@ public class EldarielLib {
 	public void preInit(FMLPreInitializationEvent event) {
 		network = new NetworkHandlerEL(MOD_ID);
 		network.register(MessageLeftClick.class, Side.SERVER);
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerLibF());;
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerLibF());
+		
+		MinecraftForge.EVENT_BUS.register(new EldarielLibCommonEvents());
+		if (event.getSide() == Side.CLIENT) {
+			MinecraftForge.EVENT_BUS.register(new EldarielLibClientEvents());
+		}
 	}
 	
 	@Mod.EventHandler
@@ -54,5 +64,15 @@ public class EldarielLib {
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		
+		// DataDump.dumpEntityList();
+		// DataDump.dumpEntchantments();
+		// DataDump.dumpPotionEffects();
+		//if ("EL_Version".equals(VERSION))
+		//	DataDump.dumpRecipes();
+	}
+	
+	public static int getMCVersion() {
+		
+		return 12;
 	}
 }

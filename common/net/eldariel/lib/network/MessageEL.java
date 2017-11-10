@@ -89,12 +89,12 @@ public class MessageEL<REQ extends MessageEL> implements Serializable, IMessage,
 		}
 	}
 	
-	private final void writeField(Field f, Class clazz, ByteBuf buf) {
+	private final void writeField(Field f, Class clazz, ByteBuf buf) throws IllegalArgumentException, IllegalAccessException {
 		Pair<Reader, Writer> handler = getHandler(clazz);
 		handler.getRight().write(f.get(this), buf);
 	}
 	
-	private final void readField(Field f, Class clazz, ByteBuf buf) {
+	private final void readField(Field f, Class clazz, ByteBuf buf) throws IllegalArgumentException, IllegalAccessException {
 		Pair<Reader, Writer> handler = getHandler(clazz);
 		f.set(this, handler.getLeft().read(buf));
 	}
